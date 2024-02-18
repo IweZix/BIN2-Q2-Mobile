@@ -25,8 +25,18 @@ class MyApp extends StatelessWidget {
         body: const Center(
           child: Column(
             children: [
-              ProductWidget(),
-              ProductWidget(),
+              ProductWidget(
+                name: "iPhone 15 Pro Max",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non.",
+                imagePath: "images/iphone.jpg",
+                price: 1479,
+              ),
+              ProductWidget(
+                name: "GeForce RTX 4080 Super",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non.",
+                imagePath: "images/cg.jpg",
+                price: 1299,
+              ),
             ],
           )
         ),

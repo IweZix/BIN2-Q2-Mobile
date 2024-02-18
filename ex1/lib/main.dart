@@ -1,3 +1,4 @@
+import 'package:ex1/laureate.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -43,18 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            Text(
-              laureate1['motivation']!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "${laureate1['firstname']!} ${laureate1['surname']!}",
-              textAlign: TextAlign.justify,
-            )
+            Laureate(firstname: laureate1['firstname']!, lastname: laureate1['surname']!, motivation: laureate1['motivation']!)
           ],
         )
       ),

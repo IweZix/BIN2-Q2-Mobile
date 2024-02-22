@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tuto2/ContactRow.dart';
+
+import 'Contact.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            ContactRow(contact: Contact(name: "test", phone: "0123456789")),
           ],
         ),
       ),

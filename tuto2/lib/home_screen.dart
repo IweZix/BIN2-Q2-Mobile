@@ -18,7 +18,20 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Contact list"),
       ),
-      body: ListView(children: contactRows),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: SizedBox(
+            width: 512,
+            child: ListView.builder(
+              itemCount: defaultContacts.length,
+              itemBuilder: (context, index) {
+                return ContactRow(contact: defaultContacts[index]);
+              },
+            ),
+          ),
+        ),
+      )
     );
   }
 }

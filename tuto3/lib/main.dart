@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tuto3/home_screen.dart';
 
 const colors = {
   "red": Colors.red,
@@ -42,69 +43,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Flutter Tutoriel 3',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: getColorValue(color)),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text('Tutoriel 3'),
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25),
-            ),
-          ),
-          backgroundColor: getColorValue(color),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    color: getColorValue(color),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Red",
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Switch(
-                    value: color == "green",
-                    activeColor: Colors.green,
-                    inactiveThumbColor: Colors.red,
-                    inactiveTrackColor: Colors.red.withOpacity(0.4),
-                    onChanged: (value) =>
-                        setColor(value
-                            ? "green"
-                            : "red"),
-                  ),
-                  const Text(
-                    "Green",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      home: HomeScreen(color: color, setColor: setColor),
     );
   }
 }

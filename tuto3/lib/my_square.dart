@@ -4,7 +4,9 @@ import 'main.dart';
 
 class MySquare extends StatelessWidget {
   final String color;
+
   const MySquare({super.key, required this.color});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(

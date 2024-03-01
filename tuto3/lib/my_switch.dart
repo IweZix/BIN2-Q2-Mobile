@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 class MySwitch extends StatelessWidget {
   final String color;
+
   final void Function(String) setColor;
+
   const MySwitch({
     super.key,
     required this.color,
     required this.setColor,
   });
+
   @override
   Widget build(BuildContext context) {
     return Row(

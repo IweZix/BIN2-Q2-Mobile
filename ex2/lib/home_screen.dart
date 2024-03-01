@@ -21,7 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final displayedProprietes = showSell ? aVendre : aLouer;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Propriétés à vendre/louer'),
+        title: const Center(
+            child: Text('Propriétés à vendre/louer')
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+        ),
+        backgroundColor: Colors.blue,
       ),
       body: Column(
         children: [

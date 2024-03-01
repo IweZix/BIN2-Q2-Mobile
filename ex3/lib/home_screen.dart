@@ -13,6 +13,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Note> notes = defaultNotes;
 
+  final controllerTitle = TextEditingController();
+
+  final controllerDescription = TextEditingController();
+
+  final title = null;
+  final description = null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue,
       ),
       body: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(32.0),
         child: Column(
           children: [
             // Display default notes
@@ -60,6 +67,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            Form(
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: controllerTitle,
+                    decoration: const InputDecoration(labelText: "Enter title"),
+                    validator: (value) {
+                      return (value == null || value.isEmpty)
+                          ? "title can't be empty"
+                          : null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: controllerDescription,
+                    decoration: const InputDecoration(labelText: "Enter description"),
+                    validator: (value) {
+                      return (value == null || value.isEmpty)
+                          ? "description can't be empty"
+                          : null;
+                    },
+                  ),
+                  const SizedBox(width: 50.0),
+                  ElevatedButton(
+                    child: const Text('Ajouter'),
+                    onPressed: () {
+                      setState(() {
+                        notes.add(Note(
+                          titre: controllerTitle.text,
+                          description: controllerDescription.text
+                        ));
+                        controllerTitle.text = "";
+                        controllerDescription.text = "";
+                      });
+                    },
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

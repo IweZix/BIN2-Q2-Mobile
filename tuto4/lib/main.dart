@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'second_screen.dart';
 import 'first_screen.dart';
-
 final GoRouter _router = GoRouter(
-    initialLocation: '/firstscreen',
+  initialLocation: '/',
   routes: [
     GoRoute(
-      path: '/firstscreen',
-      builder: (context, state) => const FirstScreen(),
-    ),
-    GoRoute(
-      path: '/secondscreen',
-      builder: (context, state) => const SecondScreen(),
+      path: '/',
+      builder: (context, state) {
+        final int nbClicks = (state.extra ?? 0) as int;
+        return FirstScreen(nbClicks: nbClicks);
+      },
+      routes: [
+        GoRoute(
+          path: 'secondscreen',
+          builder: (context, state) => const SecondScreen(),
+        ),
+      ],
     ),
   ],
 );
-
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
-
+// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

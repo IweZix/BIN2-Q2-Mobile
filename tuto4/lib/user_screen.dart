@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 class UserScreen extends StatelessWidget {
   final String username;
+
   const UserScreen({super.key, required this.username});
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String> userData = getUserData(username);

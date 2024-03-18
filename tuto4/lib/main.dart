@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tuto4/user_screen.dart';
-import 'second_screen.dart';
-import 'first_screen.dart';
+import 'package:provider/provider.dart';
+
+import '/user_screen.dart';
+import '/view_models/click_view_model.dart';
+import '/second_screen.dart';
+import '/first_screen.dart';
+
 final GoRouter _router = GoRouter(
   initialLocation: '/',
   routes: [
@@ -26,12 +30,17 @@ final GoRouter _router = GoRouter(
     ),
   ],
 );
+
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<ClickViewModel>(
+    create: (context) => ClickViewModel(),
+    child: const MyApp(),
+  ));
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-// This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

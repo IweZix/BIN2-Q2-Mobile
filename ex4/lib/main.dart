@@ -1,54 +1,55 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'view_models/article_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '/views/form_screen.dart';
-import '/views/list_screen.dart';
-import '/views/article_screen.dart';
-import '/models/article.dart';
-import '/view_model/changer_view_model.dart';
+import 'views/article_screen.dart';
+import 'views/form_screen.dart';
+import 'views/list_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'models/article.dart';
 
 final GoRouter _router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) {
-        return const ListScreen();
-      },
-    ),
-    GoRoute(
-      path: '/form',
-      builder: (context, state) {
-        return const FormScreen();
-      },
-    ),
-    GoRoute(
-      path: '/article/:id',
-      builder: (context, state) {
-        final article = state.extra as Article;
-        return ArticleScreen(article: article);
-      },
+      builder: (context, state) => const ListScreen(),
+      routes: [
+        GoRoute(
+          path: 'create-article',
+          builder: (context, state) => const FormScreen(),
+        ),
+        GoRoute(
+          path: 'articles/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            final Article? article =
+                Provider.of<ArticleViewModel>(context, listen: false)
+                    .getArticleById(int.parse(id));
+            return ArticleScreen(article: article!);
+          },
+        ),
+      ],
     ),
   ],
 );
 
 void main() {
-  runApp(ChangeNotifierProvider<ChangerViewModel>(
-    create: (context) => ChangerViewModel(),
-    child: const MyApp(),
-  ));
+  runApp(ChangeNotifierProvider<ArticleViewModel>(
+      create: (context) => ArticleViewModel(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       routerConfig: _router,
-      title: 'Exercice 4',
+      debugShowCheckedModeBanner: false,
+      title: 'Articles App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

@@ -10,7 +10,7 @@ class Film {
   final String release_date;
   final String director;
   final String running_time;
-  final String rt_score;
+  final int rt_score;
 
   const Film(this.id, this.title, this.image, this.description,
       this.release_date, this.director, this.running_time, this.rt_score);
@@ -24,7 +24,7 @@ class Film {
     jsonObj["release_date"],
     jsonObj["director"],
     jsonObj["running_time"],
-    jsonObj["rt_score"],
+    int.parse(jsonObj["rt_score"]),
   );
 
   @override

@@ -11,12 +11,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var message = " Loading, please wait…";
-  Film? film;
-  Future<void> _initFilm() async {
+  var message = "Loading…";
+  final films = <Film>[];
+  Future<void> _initFilms() async {
     try {
-      var response = await Film.fetchFilm(2);
-      setState(() => film = response);
+      var response = await Film.fetchFilms();
+      setState(() {
+        if (response.isEmpty) message = "No films found";
+        films.addAll(response);
+      });
     } catch (error) {
       setState(() => message = error.toString());
     }
@@ -24,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _initFilm();
+    _initFilms();
   }
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: film == null
+        child: films.isEmpty
             ? Column(children: [Center(child: Text(message))])
-            : FilmRow(film: film!),
+            : ListView.separated(
+          itemCount: films.length,
+          itemBuilder: (context, index) => FilmRow(film:
+          films[index]),
+          separatorBuilder: (context, index) => const Divider(),
+        ),
       ),
     );
   }

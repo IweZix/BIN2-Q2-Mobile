@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/film.dart';
+import 'film_row.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -9,22 +12,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   var message = "Loading…";
-  Future<void> _initFilm() async {
-    const url = "https://sebstreb.github.io/flutter-fiche-5/ghibli-films";
+  final films = <Film>[];
+
+  Future<void> _initFilms() async {
     try {
-      setState(() => message = "Loading, please wait…"); // Uncompleted
-      var response = await http.get(Uri.parse(url));
-      setState(() => message = response.body); // Completed with a value
+      var response = await Film.fetchFilms();
+      setState(() {
+        if (response.isEmpty) message = "No films found";
+        films.addAll(response);
+      });
     } catch (error) {
-      setState(() => message = error.toString()); //Completed with an error
+      setState(() => message = error.toString());
     }
   }
 
+  @override
   void initState() {
     super.initState();
-    _initFilm();
+    _initFilms();
   }
 
   @override
@@ -32,20 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Studio Ghibli Films"),
+        title: const Text("Tutoriel 5"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-                child: Center(
-                    child: Text(message)
-                )
-            ),
-          ],
+        child: films.isEmpty
+            ? Column(children: [Center(child: Text(message))])
+            : ListView.separated(
+          itemCount: films.length,
+          itemBuilder: (context, index) => FilmRow(film: films[index]),
+          separatorBuilder: (context, index) => const Divider(),
         ),
       ),
     );
   }
+
 }
